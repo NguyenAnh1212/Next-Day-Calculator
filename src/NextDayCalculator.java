@@ -2,23 +2,35 @@ public class NextDayCalculator {
 
     public static final String SLASH = "/";
     public static final int FIRSTDAYOFMONTH = 1;
+    public static final int LASTMONTHOFYEAR = 12;
+    public static final int FIRSTMONTHOFYEAR = 1;
 
     public static String getNextDay(int day, int month, int year) {
         int outputDay;
         int outputMonth = month;
+        int outputYear;
 
         checkLeapyear(year);
 
         int lastDayOfMonth = getLastDayOfMonth(month, year);
 
-        if(day == lastDayOfMonth){
-            outputDay = FIRSTDAYOFMONTH;
-            outputMonth = ++month;
+        if(day == lastDayOfMonth) {
+            if (month == LASTMONTHOFYEAR){
+               outputDay = FIRSTDAYOFMONTH;
+               outputMonth = FIRSTMONTHOFYEAR;
+               outputYear = ++year;
+            }else{
+                outputDay = FIRSTDAYOFMONTH;
+                outputMonth = ++month;
+                outputYear = year;
+            }
         }else{
             outputDay = ++day;
             outputMonth = month;
+            outputYear = year;
         }
-        String result = outputDay + SLASH + outputMonth +SLASH + year;
+
+        String result = outputDay + SLASH + outputMonth +SLASH + outputYear;
         return result;
     }
 
@@ -35,8 +47,6 @@ public class NextDayCalculator {
         }
         return check;
     }
-
-
     private static int getLastDayOfMonth(int month, int year) {
         int lastDayOfMonth = 0;
         switch (month){

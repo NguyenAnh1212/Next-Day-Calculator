@@ -53,7 +53,14 @@ class NextDayCalculatorTest {
         String result = NextDayCalculator.getNextDay(day, month, year);
         assertEquals(expected,result);
     }
+    @Test
+    public void testDay31Month12Year2018(){
+        int day = 31;
+        int month = 12;
+        int year = 2019;
+        String expected = "1/1/2020";
 
-
-
+        String result = NextDayCalculator.getNextDay(day, month, year);
+        assertEquals(expected,result);
+    }
 }
