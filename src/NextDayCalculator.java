@@ -5,9 +5,11 @@ public class NextDayCalculator {
 
     public static String getNextDay(int day, int month, int year) {
         int outputDay;
-        int outputYear = 0;
         int outputMonth = month;
-        int lastDayOfMonth = getLastDayOfMonth(month);
+
+        checkLeapyear(year);
+
+        int lastDayOfMonth = getLastDayOfMonth(month, year);
 
         if(day == lastDayOfMonth){
             outputDay = FIRSTDAYOFMONTH;
@@ -16,13 +18,26 @@ public class NextDayCalculator {
             outputDay = ++day;
             outputMonth = month;
         }
-        String result = outputDay + SLASH + outputMonth +SLASH +outputYear;
+        String result = outputDay + SLASH + outputMonth +SLASH + year;
         return result;
     }
 
+    private static boolean checkLeapyear(int year) {
+        boolean check = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0) {
+                    check = true;
+                }
+            } else {
+                check = true;
+            }
+        }
+        return check;
+    }
 
-    private static int getLastDayOfMonth(int month) {
-        int year = 0;
+
+    private static int getLastDayOfMonth(int month, int year) {
         int lastDayOfMonth = 0;
         switch (month){
             case 1:
@@ -41,19 +56,11 @@ public class NextDayCalculator {
                 lastDayOfMonth =30;
                 break;
             case 2:
-                boolean check = false;
-                if (year % 4 == 0) {
-                    if (year % 100 == 0) {
-                        if (year % 400 == 0) {
-                            check = true;
-                        }
-                    } else {
-                        check = true;
-                    }
+                if (checkLeapyear(year)){
+                    lastDayOfMonth = 29;
+                }else{
+                    lastDayOfMonth = 28;
                 }
-                if (check == true){lastDayOfMonth = 29;
-                }else{lastDayOfMonth = 28;}
-
                 break;
         }
         return lastDayOfMonth;
